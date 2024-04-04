@@ -17,8 +17,8 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public Object registerUser(@RequestBody RegistrationDTO body){
-        return authenticationService.registerUser(body.getUsername(), body.getEmail(), body.getPassword());
+    public void registerUser(@RequestBody RegistrationDTO body){
+        authenticationService.registerUser(body.getUsername(), body.getEmail(), body.getPassword());
     }
 
     @PostMapping("/login")

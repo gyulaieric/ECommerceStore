@@ -7,7 +7,6 @@ import com.gyulaieric.ECommerceStore.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService{
@@ -26,8 +25,10 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Optional<Product> getProduct(Long productId) {
-        return productRepository.findById(productId);
+    public Product getProduct(Long productId) {
+        return productRepository.findById(productId).orElseThrow(
+                () -> new IllegalStateException(String.format("Product with id %s doesn't exist", productId))
+        );
     }
 
     @Override

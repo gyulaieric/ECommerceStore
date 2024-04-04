@@ -2,6 +2,7 @@ package com.gyulaieric.ECommerceStore.controller;
 
 import com.gyulaieric.ECommerceStore.model.Order;
 import com.gyulaieric.ECommerceStore.service.OrderService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class OrderController {
         return orderService.getOrderById(orderId);
     }
 
-    @GetMapping("/{userId}")
-    public List<Order> getOrdersByUserId(@PathVariable Long userId) {
-        return orderService.getOrdersByUserId(userId);
+    @GetMapping("/")
+    public List<Order> getOrdersByUserId(Authentication authentication) {
+        return orderService.getOrdersByUserId(authentication);
     }
 }

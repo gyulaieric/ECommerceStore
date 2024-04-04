@@ -18,7 +18,7 @@ import com.gyulaieric.ECommerceStore.repository.UserRepository;
 
 @Service
 @Transactional
-public class AuthenticationService {
+public class AuthenticationService implements IAuthenticationService{
 
     @Autowired
     private UserRepository userRepository;
@@ -35,10 +35,11 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public Object registerUser(String username, String email, String password){
+    public void registerUser(String username, String email, String password){
 
         if (userRepository.existsByUsername(username)) {
-            return Collections.singletonMap("error", "User already exists");
+            // return Collections.singletonMap("error", "User already exists");
+            throw new IllegalStateException("User already exists");
         }
 
         String encodedPassword = passwordEncoder.encode(password);
@@ -49,8 +50,6 @@ public class AuthenticationService {
         authorities.add(userRole);
 
         userRepository.save(new User(0L, email, username, encodedPassword, authorities));
-
-        return Collections.singletonMap("success", "Successfully registered user " + username);
     }
 
     public Map<String, String> loginUser(String username, String password){
@@ -62,7 +61,7 @@ public class AuthenticationService {
 
             return Map.of("id", userRepository.findByUsername(username).get().getId().toString(), "jwt", tokenService.generateJwt(auth));
         } catch(AuthenticationException e){
-            return Collections.singletonMap("error", e.getMessage());
+            throw new IllegalStateException("Bad credentials");
         }
     }
 

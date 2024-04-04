@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.gyulaieric.ECommerceStore.repository.UserRepository;
 
-import java.util.Collections;
-import java.util.Map;
-
 @Service
 public class UserService implements UserDetailsService {
 
@@ -23,14 +20,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user is not valid"));
-    }
-
-    public Map<String, String> getUsernameById(Long id) {
-        if (userRepository.existsById(id)) {
-            return Collections.singletonMap("username", userRepository.findById(id).get().getUsername());
-        } else {
-            return Collections.singletonMap("error", "User does not exist");
-        }
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User is not valid"));
     }
 }

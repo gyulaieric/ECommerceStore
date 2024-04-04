@@ -1,10 +1,8 @@
 package com.gyulaieric.ECommerceStore.service;
 
-import com.gyulaieric.ECommerceStore.model.Cart;
-import com.gyulaieric.ECommerceStore.model.Order;
-import com.gyulaieric.ECommerceStore.model.OrderedItem;
-import com.gyulaieric.ECommerceStore.model.Product;
+import com.gyulaieric.ECommerceStore.model.*;
 import com.gyulaieric.ECommerceStore.repository.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,12 +16,14 @@ public class OrderService implements IOrderService {
     private final OrderedItemRepository orderedItemRepository;
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
+    private final UserRepository userRepository;
 
-    public OrderService(OrderRepository orderRepository, OrderedItemRepository orderedItemRepository, ProductRepository productRepository, CartRepository cartRepository) {
+    public OrderService(OrderRepository orderRepository, OrderedItemRepository orderedItemRepository, ProductRepository productRepository, CartRepository cartRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.orderedItemRepository = orderedItemRepository;
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -39,8 +39,12 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> getOrdersByUserId(Long userId) {
-        return orderRepository.findAllByUserId(userId);
+    public List<Order> getOrdersByUserId(Authentication authentication) {
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(
+                () -> new IllegalStateException(String.format("User %s doesn't exist", authentication.getName()))
+        );
+
+        return orderRepository.findAllByUserId(user.getId());
     }
 
     @Override
