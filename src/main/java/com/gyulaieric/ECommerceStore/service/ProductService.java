@@ -42,14 +42,11 @@ public class ProductService implements IProductService{
                 () -> new IllegalStateException(String.format("Product with id %s does not exist", id))
         );
 
-        if(product.getOnSale()) {
-            productToUpdate.setOldPrice(productToUpdate.getPrice());
-        }
-
         productToUpdate.setName(product.getName());
         productToUpdate.setImageUrl(product.getImageUrl());
         productToUpdate.setPrice(product.getPrice());
         productToUpdate.setOnSale(product.getOnSale());
+        productToUpdate.setOldPrice(product.getOldPrice());
         productToUpdate.setCategory(product.getCategory());
 
         productRepository.save(productToUpdate);

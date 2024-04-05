@@ -29,7 +29,7 @@ public class Order {
     @NotEmpty(message = "Last name should not be empty or null")
     private String lastName;
     @NotEmpty(message = "Email should not be empty or null")
-    @Email
+    @Email(message = "Invalid email address")
     private String email;
     @NotEmpty(message = "Address should not be empty or null")
     private String address;
