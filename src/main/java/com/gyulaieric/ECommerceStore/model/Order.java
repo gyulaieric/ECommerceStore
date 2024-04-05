@@ -1,6 +1,9 @@
 package com.gyulaieric.ECommerceStore.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,7 +11,6 @@ import java.util.List;
 @Entity
 @Table(name = "`order`")
 public class Order {
-
     @Id
     @SequenceGenerator(
             name = "order_sequence",
@@ -20,14 +22,24 @@ public class Order {
     )
     private Long id;
     private LocalDate date;
+    @NotNull(message = "User ID should not be null")
     private Long userId;
+    @NotEmpty(message = "First name should not be empty or null")
     private String firstName;
+    @NotEmpty(message = "Last name should not be empty or null")
     private String lastName;
+    @NotEmpty(message = "Email should not be empty or null")
+    @Email
     private String email;
+    @NotEmpty(message = "Address should not be empty or null")
     private String address;
+    @NotEmpty(message = "Country should not be empty or null")
     private String country;
+    @NotEmpty(message = "State should not be empty or null")
     private String state;
+    @NotEmpty(message = "City should not be empty or null")
     private String city;
+    @NotEmpty(message = "Zip code should not be empty or null")
     private String zipCode;
     @ManyToMany(
            fetch = FetchType.EAGER

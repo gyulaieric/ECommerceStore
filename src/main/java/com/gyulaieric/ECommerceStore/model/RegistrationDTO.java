@@ -1,8 +1,15 @@
 package com.gyulaieric.ECommerceStore.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+
 public class RegistrationDTO {
+    @NotEmpty(message = "Username should not be empty or null")
     private String username;
+    @NotEmpty(message = "Email should not be empty or null")
+    @Email(message = "Invalid email address")
     private String email;
+    @NotEmpty(message = "Password should not be empty or null")
     private String password;
 
     public RegistrationDTO(){

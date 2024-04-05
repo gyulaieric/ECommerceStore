@@ -1,6 +1,8 @@
 package com.gyulaieric.ECommerceStore.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ordered_items")
@@ -20,6 +22,8 @@ public class OrderedItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @NotNull(message = "Quantity should not be null")
+    @Min(1)
     private int quantity;
 
     public OrderedItem() { }

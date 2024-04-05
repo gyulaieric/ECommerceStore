@@ -1,6 +1,9 @@
 package com.gyulaieric.ECommerceStore.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "product")
@@ -17,12 +20,18 @@ public class Product {
     )
     private Long id;
 
+    @NotEmpty(message = "Name should not be empty or null")
     private String name;
     private String description;
+    @NotEmpty(message = "Image URL should not be empty or null")
     private String imageUrl;
+    @NotNull(message = "Price should not be null")
     private Double price;
     private Double oldPrice;
+    @NotNull(message = "quantity should not be null")
+    @Min(1)
     private int quantity;
+    @NotNull(message = "onSale should not be null")
     private Boolean onSale;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -2,7 +2,6 @@ package com.gyulaieric.ECommerceStore.repository;
 
 import com.gyulaieric.ECommerceStore.model.Cart;
 import com.gyulaieric.ECommerceStore.model.OrderedItem;
-import com.gyulaieric.ECommerceStore.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

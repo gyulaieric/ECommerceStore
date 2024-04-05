@@ -1,6 +1,8 @@
 package com.gyulaieric.ECommerceStore.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,9 +18,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Email should not be empty or null")
+    @Email(message = "Invalid email address")
     private String email;
+    @NotEmpty(message = "Username should not be empty or null")
     @Column(unique = true)
     private String username;
+    @NotEmpty(message = "Password should not be empty or null")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -27,7 +33,6 @@ public class User implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
-
     private Set<Role> authorities;
 
     public User() {

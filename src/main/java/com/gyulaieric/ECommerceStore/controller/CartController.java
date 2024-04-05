@@ -2,6 +2,7 @@ package com.gyulaieric.ECommerceStore.controller;
 
 import com.gyulaieric.ECommerceStore.model.Cart;
 import com.gyulaieric.ECommerceStore.service.CartService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +25,12 @@ public class CartController {
     }
 
     @PostMapping("/add/{productId}")
-    public void addToCart(Authentication authentication, @PathVariable Long productId, @RequestBody int quantity) {
+    public void addToCart(Authentication authentication, @PathVariable Long productId, @Valid @RequestBody int quantity) {
         cartService.addToCart(authentication, productId, quantity);
     }
 
     @PutMapping("/update/{cartId}")
-    public void updateCart(@PathVariable Long cartId, @RequestBody int quantity) {
+    public void updateCart(@PathVariable Long cartId, @Valid @RequestBody int quantity) {
         cartService.updateCart(cartId, quantity);
     }
 

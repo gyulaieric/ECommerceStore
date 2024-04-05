@@ -4,6 +4,7 @@ import com.gyulaieric.ECommerceStore.model.*;
 import com.gyulaieric.ECommerceStore.service.CategoryService;
 import com.gyulaieric.ECommerceStore.service.OrderService;
 import com.gyulaieric.ECommerceStore.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +24,12 @@ public class AdminController {
     }
 
     @PostMapping("/category/add")
-    public void addCategory(@RequestBody Category category) {
+    public void addCategory(@Valid @RequestBody Category category) {
         categoryService.addCategory(category);
     }
 
     @PutMapping("/category/update/{categoryId}")
-    public void updateCategory(@PathVariable int categoryId, @RequestBody Category category) {
+    public void updateCategory(@PathVariable int categoryId, @Valid @RequestBody Category category) {
         categoryService.updateCategory(categoryId, category);
     }
 
@@ -38,12 +39,12 @@ public class AdminController {
     }
 
     @PostMapping("/product/add")
-    public void addProduct(@RequestBody Product product) {
+    public void addProduct(@Valid @RequestBody Product product) {
         productService.addProduct(product);
     }
 
     @PutMapping("/product/update/{productId}")
-    public void updateProduct(@PathVariable Long productId, @RequestBody Product product) {
+    public void updateProduct(@PathVariable Long productId, @Valid @RequestBody Product product) {
         productService.updateProduct(productId, product);
     }
 
@@ -58,7 +59,7 @@ public class AdminController {
     }
 
     @PostMapping("/orders/update/{id}")
-    public void updateOrder(@PathVariable Long id, @RequestBody Order order) {
+    public void updateOrder(@PathVariable Long id, @Valid @RequestBody Order order) {
         orderService.updateOrder(id, order);
     }
 
@@ -68,12 +69,12 @@ public class AdminController {
     }
 
     @PostMapping("/orders/addProduct")
-    public void addProductToOrder(@RequestBody OrderedItemDTO orderedItemDTO) {
+    public void addProductToOrder(@Valid @RequestBody OrderedItemDTO orderedItemDTO) {
         orderService.addProductToOrder(orderedItemDTO.getOrderId(), orderedItemDTO.getOrderedItemId(), orderedItemDTO.getProductId(), orderedItemDTO.getQuantity());
     }
 
     @DeleteMapping("/orders/removeProduct")
-    public void removeProductFromOrder(@RequestBody OrderedItemDTO orderedItemDTO) {
+    public void removeProductFromOrder(@Valid @RequestBody OrderedItemDTO orderedItemDTO) {
         orderService.deleteProductFromOrder(orderedItemDTO.getOrderId(), orderedItemDTO.getOrderedItemId());
     }
 }

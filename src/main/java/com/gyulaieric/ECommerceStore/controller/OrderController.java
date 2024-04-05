@@ -2,6 +2,7 @@ package com.gyulaieric.ECommerceStore.controller;
 
 import com.gyulaieric.ECommerceStore.model.Order;
 import com.gyulaieric.ECommerceStore.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public Long addOrder(@RequestBody Order order) {
+    public Long addOrder(@Valid @RequestBody Order order) {
         return orderService.addOrder(order);
     }
 

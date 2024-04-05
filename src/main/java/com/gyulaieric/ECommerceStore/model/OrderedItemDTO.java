@@ -1,9 +1,17 @@
 package com.gyulaieric.ECommerceStore.model;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 public class OrderedItemDTO {
+    @NotNull(message = "Order Id should not be null")
     private Long orderId;
+    @NotNull(message = "Ordered item Id should not be null")
     private Long orderedItemId;
+    @NotNull(message = "Product Id should not be null")
     private Long productId;
+    @NotNull(message = "Quantity should not be null")
+    @Min(1)
     private int quantity;
 
     public OrderedItemDTO() { super(); }
