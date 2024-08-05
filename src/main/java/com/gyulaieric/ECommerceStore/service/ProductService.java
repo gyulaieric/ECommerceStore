@@ -39,13 +39,13 @@ public class ProductService implements IProductService{
     @Override
     public void updateProduct(Long id, Product product) {
         Product productToUpdate = productRepository.findById(id).orElseThrow(
-                () -> new IllegalStateException(String.format("Product with id %s does not exist", id))
+                () -> new IllegalStateException(String.format("Product with id %s doesn't exist", id))
         );
 
         productToUpdate.setName(product.getName());
         productToUpdate.setImageUrl(product.getImageUrl());
         productToUpdate.setPrice(product.getPrice());
-        productToUpdate.setOnSale(product.getOnSale());
+        productToUpdate.setOnSale(product.isOnSale());
         productToUpdate.setOldPrice(product.getOldPrice());
         productToUpdate.setCategory(product.getCategory());
 
@@ -55,7 +55,7 @@ public class ProductService implements IProductService{
     @Override
     public void deleteProduct(Long id) {
         if(!productRepository.existsById(id)) {
-            throw new IllegalStateException(String.format("Product with id %s does not exist", id));
+            throw new IllegalStateException(String.format("Product with id %s doesn't exist", id));
         }
 
         List<Cart> cartList = cartRepository.findAllByProductId(id);

@@ -28,7 +28,7 @@ public class CategoryService implements ICategoryService{
     @Override
     public void updateCategory(int id, Category category) {
         Category categoryToUpdate = categoryRepository.findById(id).orElseThrow(
-                () -> new IllegalStateException(String.format("Category with id %s does not exist", id)));
+                () -> new IllegalStateException(String.format("Category with id %s doesn't exist", id)));
 
         categoryToUpdate.setName(category.getName());
         categoryToUpdate.setImageUrl(category.getImageUrl());
@@ -40,7 +40,7 @@ public class CategoryService implements ICategoryService{
     @Override
     public void deleteCategory(int id) {
         if(!categoryRepository.existsById(id)) {
-            throw new IllegalStateException(String.format("Employee with id %s does not exist", id));
+            throw new IllegalStateException(String.format("Category with id %s doesn't exist", id));
         }
 
         categoryRepository.deleteById(id);

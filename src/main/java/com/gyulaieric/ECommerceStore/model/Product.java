@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "product")
 public class Product {
@@ -20,10 +22,10 @@ public class Product {
     )
     private Long id;
 
-    @NotEmpty(message = "Name should not be empty or null")
+    @NotEmpty(message = "Name should not be empty")
     private String name;
     private String description;
-    @NotEmpty(message = "Image URL should not be empty or null")
+    @NotEmpty(message = "Image URL should not be empty")
     private String imageUrl;
     @NotNull(message = "Price should not be null")
     private Double price;
@@ -53,6 +55,10 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -95,7 +101,7 @@ public class Product {
         this.oldPrice = oldPrice;
     }
 
-    public Boolean getOnSale() {
+    public Boolean isOnSale() {
         return onSale;
     }
 
@@ -117,5 +123,18 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return quantity == product.quantity && Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(price, product.price) && Objects.equals(oldPrice, product.oldPrice) && Objects.equals(onSale, product.onSale) && Objects.equals(category, product.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, imageUrl, price, oldPrice, quantity, onSale, category);
     }
 }

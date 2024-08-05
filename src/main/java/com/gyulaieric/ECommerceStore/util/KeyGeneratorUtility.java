@@ -1,4 +1,4 @@
-package com.gyulaieric.ECommerceStore.utils;
+package com.gyulaieric.ECommerceStore.util;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;

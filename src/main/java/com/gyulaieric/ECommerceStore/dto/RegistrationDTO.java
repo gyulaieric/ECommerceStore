@@ -1,15 +1,15 @@
-package com.gyulaieric.ECommerceStore.model;
+package com.gyulaieric.ECommerceStore.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 public class RegistrationDTO {
-    @NotEmpty(message = "Username should not be empty or null")
+    @NotEmpty(message = "Username should not be empty")
     private String username;
-    @NotEmpty(message = "Email should not be empty or null")
+    @NotEmpty(message = "Email should not be empty")
     @Email(message = "Invalid email address")
     private String email;
-    @NotEmpty(message = "Password should not be empty or null")
+    @NotEmpty(message = "Password should not be empty")
     private String password;
 
     public RegistrationDTO(){
@@ -45,9 +45,5 @@ public class RegistrationDTO {
 
     public void setPassword(String password){
         this.password = password;
-    }
-
-    public String toString(){
-        return "Registration info: username: " + this.username + " password: " + this.password;
     }
 }

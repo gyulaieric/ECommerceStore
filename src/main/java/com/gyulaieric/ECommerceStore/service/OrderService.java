@@ -32,10 +32,20 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElseThrow(
+    public Order getOrderById(Authentication authentication, Long id) {
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(
+                () -> new IllegalStateException(String.format("User %s doesn't exist", authentication.getName()))
+        );
+
+        Order order = orderRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException(String.format("Order with id %s doesn't exist", id))
         );
+
+        if (order.getUserId().equals(user.getId())) {
+            return order;
+        } else {
+            throw new IllegalStateException("You can only view orders that you have placed");
+        }
     }
 
     @Override
@@ -64,7 +74,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void addProductToOrder(Long id, Long orderedItemId, Long productId, int quantity) {
+    public void addProductToOrder(Long id, Long orderedItemId, Long productId, Integer quantity) {
         Order order = orderRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException(String.format("Order with id %s doesn't exist", id))
         );
@@ -91,6 +101,8 @@ public class OrderService implements IOrderService {
 
                 orderedItemRepository.save(newOrderedItem);
                 orderRepository.save(order);
+            } else {
+                throw new IllegalStateException(String.format("Product with id %s doesn't exist", productId));
             }
         }
     }
@@ -110,7 +122,9 @@ public class OrderService implements IOrderService {
 
             orderedItemRepository.delete(orderedItem);
             orderRepository.save(order);
-        }        
+        } else {
+            throw new IllegalStateException(String.format("Item (%s) is not in order", orderedItemId));
+        }
     }
 
     @Override

@@ -1,18 +1,18 @@
-package com.gyulaieric.ECommerceStore.model;
+package com.gyulaieric.ECommerceStore.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 
 public class LoginDTO {
-    @NotEmpty(message = "Username should not be empty or null")
+    @NotEmpty(message = "Username should not be empty")
     private String username;
-    @NotEmpty(message = "Password should not be empty or null")
+    @NotEmpty(message = "Password should not be empty")
     private String password;
 
     public LoginDTO(){
         super();
     }
 
-    public LoginDTO(String username, String email ,String password){
+    public LoginDTO(String username, String password){
         super();
         this.username = username;
         this.password = password;
@@ -32,9 +32,5 @@ public class LoginDTO {
 
     public void setPassword(String password){
         this.password = password;
-    }
-
-    public String toString(){
-        return "Login info: username: " + this.username + " password: " + this.password;
     }
 }

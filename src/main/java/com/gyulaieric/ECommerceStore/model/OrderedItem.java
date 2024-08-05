@@ -24,7 +24,7 @@ public class OrderedItem {
 
     @NotNull(message = "Quantity should not be null")
     @Min(1)
-    private int quantity;
+    private Integer quantity;
 
     public OrderedItem() { }
 
@@ -35,6 +35,10 @@ public class OrderedItem {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Product getProduct() {
@@ -49,7 +53,7 @@ public class OrderedItem {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

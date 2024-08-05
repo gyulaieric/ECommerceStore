@@ -1,5 +1,6 @@
 package com.gyulaieric.ECommerceStore.controller;
 
+import com.gyulaieric.ECommerceStore.dto.OrderedItemDTO;
 import com.gyulaieric.ECommerceStore.model.*;
 import com.gyulaieric.ECommerceStore.service.CategoryService;
 import com.gyulaieric.ECommerceStore.service.OrderService;
@@ -58,7 +59,7 @@ public class AdminController {
         return orderService.getOrders();
     }
 
-    @PostMapping("/orders/update/{id}")
+    @PutMapping("/orders/update/{id}")
     public void updateOrder(@PathVariable Long id, @Valid @RequestBody Order order) {
         orderService.updateOrder(id, order);
     }

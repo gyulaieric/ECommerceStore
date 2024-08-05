@@ -25,7 +25,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import com.gyulaieric.ECommerceStore.utils.RSAKeyProperties;
+import com.gyulaieric.ECommerceStore.util.RSAKeyProperties;
 
 @Configuration
 public class SecurityConfig {
@@ -54,11 +54,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/").permitAll();
+                    auth.requestMatchers("/auth/**").permitAll();
                     auth.requestMatchers("/api/**").permitAll();
                     auth.requestMatchers("/api/cart/**").hasAnyRole("ADMIN", "USER");
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/admin/api/**").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
                 });
 

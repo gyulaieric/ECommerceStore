@@ -2,7 +2,6 @@ package com.gyulaieric.ECommerceStore.service;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,25 +19,27 @@ import com.gyulaieric.ECommerceStore.repository.UserRepository;
 @Transactional
 public class AuthenticationService implements IAuthenticationService{
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
+
+    public AuthenticationService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
+    }
 
     public void registerUser(String username, String email, String password){
 
         if (userRepository.existsByUsername(username)) {
-            // return Collections.singletonMap("error", "User already exists");
             throw new IllegalStateException("User already exists");
         }
 
@@ -49,7 +50,7 @@ public class AuthenticationService implements IAuthenticationService{
 
         authorities.add(userRole);
 
-        userRepository.save(new User(0L, email, username, encodedPassword, authorities));
+        userRepository.save(new User(1L, email, username, encodedPassword, authorities));
     }
 
     public Map<String, String> loginUser(String username, String password){

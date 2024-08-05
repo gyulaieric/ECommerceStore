@@ -1,11 +1,11 @@
 package com.gyulaieric.ECommerceStore.controller;
 
-import com.gyulaieric.ECommerceStore.model.LoginDTO;
+import com.gyulaieric.ECommerceStore.dto.LoginDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.gyulaieric.ECommerceStore.model.RegistrationDTO;
+import com.gyulaieric.ECommerceStore.dto.RegistrationDTO;
 import com.gyulaieric.ECommerceStore.service.AuthenticationService;
 
 import java.util.Map;

@@ -27,11 +27,11 @@ public class Cart {
     private Product product;
     @NotNull(message = "Quantity should not be null")
     @Min(1)
-    private int quantity;
+    private Integer quantity;
 
     public Cart() { }
 
-    public Cart(User user, Product product, int quantity) {
+    public Cart(User user, Product product, Integer quantity) {
         this.user = user;
         this.product = product;
         this.quantity = quantity;
@@ -39,6 +39,10 @@ public class Cart {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -61,7 +65,7 @@ public class Cart {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

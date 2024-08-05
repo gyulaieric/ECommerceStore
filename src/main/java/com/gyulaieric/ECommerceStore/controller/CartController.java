@@ -19,9 +19,9 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("/{userId}")
-    public List<Cart> getCart(@PathVariable Long userId) {
-        return cartService.getCart(userId);
+    @GetMapping("/")
+    public List<Cart> getCart(Authentication authentication) {
+        return cartService.getCart(authentication);
     }
 
     @PostMapping("/add/{productId}")
@@ -30,12 +30,12 @@ public class CartController {
     }
 
     @PutMapping("/update/{cartId}")
-    public void updateCart(@PathVariable Long cartId, @Valid @RequestBody int quantity) {
-        cartService.updateCart(cartId, quantity);
+    public void updateCart(Authentication authentication, @PathVariable Long cartId, @Valid @RequestBody Integer quantity) {
+        cartService.updateCart(authentication, cartId, quantity);
     }
 
     @DeleteMapping("/delete/{cartId}")
-    public void deleteCart(@PathVariable Long cartId) {
-        cartService.deleteFromCart(cartId);
+    public void deleteCart(Authentication authentication, @PathVariable Long cartId) {
+        cartService.deleteFromCart(authentication, cartId);
     }
 }

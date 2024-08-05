@@ -26,16 +26,16 @@ public class CartService implements ICartService{
     }
 
     @Override
-    public List<Cart> getCart(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new IllegalStateException(String.format("User with id %s doesn't exist", userId))
+    public List<Cart> getCart(Authentication authentication) {
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(
+                () -> new IllegalStateException(String.format("User %s doesn't exist", authentication.getName()))
         );
 
         return cartRepository.findAllByUser(user);
     }
 
     @Override
-    public void addToCart(Authentication authentication, Long productId, int quantity) {
+    public void addToCart(Authentication authentication, Long productId, Integer quantity) {
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow(
                 () -> new IllegalStateException(String.format("User %s doesn't exist", authentication.getName()))
         );
@@ -58,22 +58,37 @@ public class CartService implements ICartService{
     }
 
     @Override
-    public void updateCart(Long id, int quantity) {
+    public void updateCart(Authentication authentication, Long id, Integer quantity) {
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(
+                () -> new IllegalStateException(String.format("User %s doesn't exist", authentication.getName()))
+        );
+
         Cart cartToUpdate = cartRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException(String.format("Cart item with id %s doesn't exist", id))
         );
 
-        cartToUpdate.setQuantity(quantity);
-
-        cartRepository.save(cartToUpdate);
+        if (cartToUpdate.getUser().equals(user)) {
+            cartToUpdate.setQuantity(quantity);
+            cartRepository.save(cartToUpdate);
+        } else {
+            throw new IllegalStateException("You can only update your own cart");
+        }
     }
 
     @Override
-    public void deleteFromCart(Long id) {
-        if(!cartRepository.existsById(id)) {
-            throw new IllegalStateException(String.format("Cart item with id %s doesn't exist", id));
-        }
+    public void deleteFromCart(Authentication authentication, Long id) {
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(
+                () -> new IllegalStateException(String.format("User %s doesn't exist", authentication.getName()))
+        );
 
-        cartRepository.deleteById(id);
+        Cart cartToDelete = cartRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException(String.format("Cart item with id %s doesn't exist", id))
+        );
+
+        if (cartToDelete.getUser().equals(user)) {
+            cartRepository.delete(cartToDelete);
+        } else {
+            throw new IllegalStateException("You can only delete items from your own cart");
+        }
     }
 }
