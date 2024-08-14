@@ -5,7 +5,6 @@ import com.gyulaieric.ECommerceStore.model.Order;
 import com.gyulaieric.ECommerceStore.model.OrderStatus;
 import com.gyulaieric.ECommerceStore.repository.RoleRepository;
 import com.gyulaieric.ECommerceStore.repository.UserRepository;
-import com.gyulaieric.ECommerceStore.service.AuthenticationService;
 import com.gyulaieric.ECommerceStore.service.OrderService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,6 @@ import java.util.List;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -55,7 +53,7 @@ public class OrderControllerTest {
     public void addOrder() throws Exception {
         Order order = new Order(LocalDate.now(), 1L, "Eric", "Gyulai", "gyulaieric@gmail.com", "Faget 82", "Romania", "Maramures", "Sighetu Marmatiei", "435500", null, OrderStatus.PROCESSING);
 
-        mockMvc.perform(post("/api/orders/create")
+        mockMvc.perform(post("/api/orders/")
                 .with(jwt())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(order)))
@@ -70,7 +68,7 @@ public class OrderControllerTest {
 
         Mockito.when(orderService.getOrderById(Mockito.any(Authentication.class), Mockito.anyLong())).thenReturn(order);
 
-        mockMvc.perform(get("/api/orders/getOrder/" + order.getId())
+        mockMvc.perform(get("/api/orders/" + order.getId())
                         .with(jwt()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", CoreMatchers.is(order.getId().intValue())));

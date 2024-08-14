@@ -20,18 +20,18 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/create")
+    @GetMapping("/")
+    public List<Order> getOrdersByUserId(Authentication authentication) {
+        return orderService.getOrdersByUserId(authentication);
+    }
+
+    @PostMapping("/")
     public Long addOrder(@Valid @RequestBody Order order) {
         return orderService.addOrder(order);
     }
 
-    @GetMapping("/getOrder/{orderId}")
+    @GetMapping("/{orderId}")
     public Order getOrderById(Authentication authentication, @PathVariable Long orderId) {
         return orderService.getOrderById(authentication, orderId);
-    }
-
-    @GetMapping("/")
-    public List<Order> getOrdersByUserId(Authentication authentication) {
-        return orderService.getOrdersByUserId(authentication);
     }
 }

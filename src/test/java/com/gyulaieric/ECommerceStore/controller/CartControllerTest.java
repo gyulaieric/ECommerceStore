@@ -83,7 +83,7 @@ public class CartControllerTest {
         Long productId = 1L;
         int quantity = 2;
 
-        mockMvc.perform(post("/api/cart/add/" + productId)
+        mockMvc.perform(post("/api/cart/" + productId)
                 .with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(quantity)))
@@ -98,7 +98,7 @@ public class CartControllerTest {
         int quantity = 1;
         Cart cart = new Cart();
 
-        mockMvc.perform(put("/api/cart/update/" + cartId)
+        mockMvc.perform(put("/api/cart/" + cartId)
                         .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(quantity)))
@@ -111,7 +111,7 @@ public class CartControllerTest {
     public void deleteCart() throws Exception {
         Long cartId = 1L;
 
-        mockMvc.perform(delete("/api/cart/delete/" + cartId)
+        mockMvc.perform(delete("/api/cart/" + cartId)
                         .with(jwt()))
                 .andExpect(status().isOk());
 

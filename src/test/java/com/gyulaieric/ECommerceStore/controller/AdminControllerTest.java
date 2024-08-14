@@ -103,7 +103,7 @@ public class AdminControllerTest {
     public void addProduct() throws Exception {
         Product product = new Product("testProduct", "testDescription", "testImage.png", 15.99, null, false, 40, null);
 
-        mockMvc.perform(post("/admin/api/product/add")
+        mockMvc.perform(post("/admin/api/product/")
                         .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(product)))
@@ -117,7 +117,7 @@ public class AdminControllerTest {
         Long productId = 1L;
         Product product = new Product("testProduct", "testDescription", "testImage.png", 15.99, null, false, 40, null);
 
-        mockMvc.perform(put("/admin/api/product/update/" + productId)
+        mockMvc.perform(put("/admin/api/product/" + productId)
                         .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(product)))
@@ -130,7 +130,7 @@ public class AdminControllerTest {
     public void deleteProduct() throws Exception {
         Long productId = 1L;
 
-        mockMvc.perform(delete("/admin/api/product/delete/" + productId)
+        mockMvc.perform(delete("/admin/api/product/" + productId)
                         .with(jwt()))
                 .andExpect(status().isOk());
 
@@ -159,7 +159,7 @@ public class AdminControllerTest {
     public void testUpdateOrder() throws Exception {
         Order order = new Order(LocalDate.now(), 1L, "Eric", "Gyulai", "gyulaieric@gmail.com", "Faget 82", "Romania", "Maramures", "Sighetu Marmatiei", "435500", null, OrderStatus.PROCESSING);
 
-        mockMvc.perform(put("/admin/api/orders/update/1")
+        mockMvc.perform(put("/admin/api/orders/1")
                         .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(order)))
@@ -172,7 +172,7 @@ public class AdminControllerTest {
     public void deleteOrder() throws Exception {
         Long orderId = 1L;
 
-        mockMvc.perform(delete("/admin/api/orders/delete/" + orderId)
+        mockMvc.perform(delete("/admin/api/orders/" + orderId)
                         .with(jwt()))
                 .andExpect(status().isOk());
 

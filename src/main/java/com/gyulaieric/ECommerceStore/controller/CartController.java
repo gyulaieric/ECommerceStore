@@ -24,17 +24,17 @@ public class CartController {
         return cartService.getCart(authentication);
     }
 
-    @PostMapping("/add/{productId}")
+    @PostMapping("/{productId}")
     public void addToCart(Authentication authentication, @PathVariable Long productId, @Valid @RequestBody int quantity) {
         cartService.addToCart(authentication, productId, quantity);
     }
 
-    @PutMapping("/update/{cartId}")
+    @PutMapping("/{cartId}")
     public void updateCart(Authentication authentication, @PathVariable Long cartId, @Valid @RequestBody Integer quantity) {
         cartService.updateCart(authentication, cartId, quantity);
     }
 
-    @DeleteMapping("/delete/{cartId}")
+    @DeleteMapping("/{cartId}")
     public void deleteCart(Authentication authentication, @PathVariable Long cartId) {
         cartService.deleteFromCart(authentication, cartId);
     }

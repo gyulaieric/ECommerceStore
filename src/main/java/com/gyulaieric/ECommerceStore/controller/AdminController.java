@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin()
+@CrossOrigin("127.0.0.1:5500")
 @RestController
 @RequestMapping("/admin/api")
 public class AdminController {
@@ -39,17 +39,17 @@ public class AdminController {
         categoryService.deleteCategory(categoryId);
     }
 
-    @PostMapping("/product/add")
+    @PostMapping("/product/")
     public void addProduct(@Valid @RequestBody Product product) {
         productService.addProduct(product);
     }
 
-    @PutMapping("/product/update/{productId}")
+    @PutMapping("/product/{productId}")
     public void updateProduct(@PathVariable Long productId, @Valid @RequestBody Product product) {
         productService.updateProduct(productId, product);
     }
 
-    @DeleteMapping("/product/delete/{productId}")
+    @DeleteMapping("/product/{productId}")
     public void deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
     }
@@ -59,12 +59,12 @@ public class AdminController {
         return orderService.getOrders();
     }
 
-    @PutMapping("/orders/update/{id}")
+    @PutMapping("/orders/{id}")
     public void updateOrder(@PathVariable Long id, @Valid @RequestBody Order order) {
         orderService.updateOrder(id, order);
     }
 
-    @DeleteMapping("/orders/delete/{id}")
+    @DeleteMapping("/orders/{id}")
     public void deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
     }
